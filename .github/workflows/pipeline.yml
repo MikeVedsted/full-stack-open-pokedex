@@ -35,5 +35,7 @@ jobs:
           heroku_email: "mikevedsted@gmail.com"
           healthcheck: "https://dexmypoke.herokuapp.com/health"
           checkstring: "ok"
+          rollbackonhealthcheckfailed: true
+
 
           
