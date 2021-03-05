@@ -34,4 +34,6 @@ jobs:
           heroku_app_name: "dexmypoke"
           heroku_email: "mikevedsted@gmail.com"
           healthcheck: "https://dexmypoke.herokuapp.com/health"
+          checkstring: "ok"
+
           
