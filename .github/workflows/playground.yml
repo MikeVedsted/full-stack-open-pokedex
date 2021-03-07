@@ -35,7 +35,7 @@ jobs:
         env:
           ARR: ${{ toJson(join(github.event.commits.*.message)) }}
           
-        if: ${{ contains($ARR, '#skip') }}
+        if: "!contains($ARR, '#skip')"
         run: echo "$ARR"
 
 # if: ${{ github.event_name == 'push' }}
