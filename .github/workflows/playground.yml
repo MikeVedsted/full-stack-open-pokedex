@@ -34,5 +34,5 @@ jobs:
       - name: this
         if: github.event_name == 'push' && !contains(toJson(join(github.event.commits.*.message)), '#skip')
         # if: "!contains(toJson(join(github.event.commits.*.message)), '#skip')"
-        run: echo "works? :D"
+        run: echo "works? :D!"
 
