@@ -28,7 +28,7 @@ jobs:
 
       - name: array joined
         env:
-          COMMIT_ARR: ${{ toJson(join(github.event.commits.*.message)) }}
+          COMMIT_ARR: ${{ contains(toJson(join(github.event.commits.*.message))) }}
         run: echo "$COMMIT_ARR"
 
 
