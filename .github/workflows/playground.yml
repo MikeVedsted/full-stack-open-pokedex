@@ -29,7 +29,8 @@ jobs:
       - name: array joined
         env:
           COMMIT_ARR: ${{ contains(toJson(join(github.event.commits.*.message)), '#skip') }}
-        run: echo "!$COMMIT_ARR"
+          BOOL: $({ !$COMMIT_ARR})
+        run: echo !"$COMMIT_ARR" &&  echo "$BOOL"
 
       
 
