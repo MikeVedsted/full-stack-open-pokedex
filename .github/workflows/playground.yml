@@ -33,7 +33,6 @@ jobs:
 
 
 # if: ${{ github.event_name == 'push' }}
-# if: ${{ github.event_name == 'push' }}
 
 
 
