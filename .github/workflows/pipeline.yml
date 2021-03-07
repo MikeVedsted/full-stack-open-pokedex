@@ -20,16 +20,16 @@ jobs:
       - name: npm install
         run: npm install
 
-      - name: lint
+      - name: Lint
         run: npm run eslint
 
-      - name: build
+      - name: Build
         run: npm run build
 
-      - name: test
+      - name: Unit tests
         run: npm run test
 
-      - name: e2e tests
+      - name: E2E tests
         uses: cypress-io/github-action@v2
         with:
           command: npm run test:e2e
@@ -43,7 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           
-      - name: deploy to heroku
+      - name: Deploy to heroku
         if: github.event_name == 'push' && !contains(toJson(join(github.event.commits.*.message)), '#skip')
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
