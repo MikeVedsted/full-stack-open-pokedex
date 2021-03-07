@@ -26,6 +26,12 @@ jobs:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
 
+      - name: array joined
+        env: 
+          ARRAY: $({ join(gite.events.commits)})
+          CONTAINS: $({ contains($ARRAY, "#skip")})
+        run: echo "$ARRAY" && echo "$CONTAINS"
+
 # if: ${{ github.event_name == 'push' }}
 
 
