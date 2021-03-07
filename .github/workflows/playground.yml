@@ -29,14 +29,9 @@ jobs:
       - name: array joined
         env:
           COMMIT_ARR: ${{ contains(toJson(join(github.event.commits.*.message)), '#skip') }}
-        run: echo "$COMMIT_ARR"
+        run: echo "!$COMMIT_ARR"
 
-      - name: conditional
-        env:
-          ARR: ${{ toJson(join(github.event.commits.*.message)) }}
-          
-        if: "!contains($ARR, '#skip')"
-        run: echo "$ARR"
+      
 
 # if: ${{ github.event_name == 'push' }}
 # if: ${{ github.event_name == 'push' }}
