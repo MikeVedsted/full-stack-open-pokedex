@@ -57,13 +57,13 @@ jobs:
       - name: Notify on slack
         uses: 8398a7/action-slack@v3
         with:
-          status: ${{ job.status }}
+          status: custom
+          fields: all
           custom_payload: |
             {
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
                 text: '${{ job.status }}' === 'success' ?  `Successfully deployed a new version (${process.env.AS_COMMIT}) of DexMyPoke with ${process.env.AS_WORKFLOW}\nThis action was triggered by ${process.env.AS_AUTHOR}\nProcess took ${process.env.AS_TOOK}` : `Work flow failed on ${process.env.AS_REPO} for commit ${process.env.AS_COMMIT}`'
-                fields: '${{ job.status }}' === 'success' ? []  : [{all}]'
               }]
             }
         env:
