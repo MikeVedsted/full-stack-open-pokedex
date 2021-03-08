@@ -62,10 +62,37 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                color: 
                 text: '${{ job.status }}' === 'success' ?  `Successfully deployed a new version (${process.env.AS_COMMIT}) of DexMyPoke with ${process.env.AS_WORKFLOW}\nThis action was triggered by ${process.env.AS_AUTHOR}\nProcess took ${process.env.AS_TOOK}` : `Work flow failed on ${process.env.AS_REPO} for commit ${process.env.AS_COMMIT}`'
               }]
             }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
+
+
+      - name: Notify on slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              attachments: [{
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                title: 'TITLE',
+                text: 'TEXT',
+                fields: [{
+                  title: 'FIELD TITLE',
+                  value: 'field title',
+                },
+                {
+                  title: 'second title',
+                  value: `repo:  ${process.env.AS_REPO}`,
+                }],
+                actions: [{
+                }]
+              }]
+            }     
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
