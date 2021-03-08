@@ -16,6 +16,20 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflow,job,commit,repo,ref,author,took
+          custom_payload: |
+            {
+              attachments: [{
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
 
       - name: npm install
         run: npm install
@@ -38,7 +52,7 @@ jobs:
 
       - name: Bump version and push tag
         if: github.event_name == 'push' && !contains(toJson(join(github.event.commits.*.message)), '#skip')
-        uses: anothrNick/github-tag-action@1.33.0
+        uses: anothrNick/github-tag-action@eca2b69f9e2c24be7decccd0f15fdb1ea5906598
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
@@ -52,5 +66,4 @@ jobs:
           heroku_email: "mikevedsted@gmail.com"
           healthcheck: "https://dexmypoke.herokuapp.com/health"
           checkstring: "ok"
-          rollbackonhealthcheckfailed: true
-      
+          rollbackonhealthcheckfailed: true    
