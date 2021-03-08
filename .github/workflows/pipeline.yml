@@ -57,6 +57,7 @@ jobs:
       - name: Notify on slack
         uses: 8398a7/action-slack@v3
         with:
+          status: custom
           fields: eventName, commit, repo, author, took, workflow, message
           custom_payload: |
             {
