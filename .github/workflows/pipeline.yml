@@ -54,7 +54,8 @@ jobs:
           checkstring: "ok"
           rollbackonhealthcheckfailed: true    
 
-      - uses: 8398a7/action-slack@v3
+      - name: Notify on slack
+        uses: 8398a7/action-slack@v3
         with:
           status: custom
           fields: workflow,job,commit,repo,ref,author,took
