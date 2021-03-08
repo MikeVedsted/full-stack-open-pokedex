@@ -57,7 +57,6 @@ jobs:
       - name: Notify on slack
         uses: 8398a7/action-slack@v3
         with:
-          status: ${{ job.status }}
           fields: eventName, commit, repo, author, took, workflow, message
           custom_payload: |
             {
@@ -65,7 +64,7 @@ jobs:
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
                 title: '${{ job.status }}' === 'success' ? 'New version of DexMyPoke has been deployed' : `Deployment of ${process.env.AS_COMMIT} failed`,
                 text: `Process was triggered by ${process.env.AS_EVENT_NAME} to ${process.env.AS_REPO} authored by ${process.env.AS_AUTHOR} and took ${process.env.AS_TOOK}`,
-                fields: [{
+                fields: '${{ job.status }}' === 'success' ? [] : [{
                   title: 'Job',
                   value: `${process.env.AS_WORKFLOW}`,
                 },
@@ -88,7 +87,7 @@ jobs:
                 {
                   title: 'author',
                   value: `${process.env.AS_AUTHOR}`,
-                }],
+                }]
               }]
             }     
         env:
