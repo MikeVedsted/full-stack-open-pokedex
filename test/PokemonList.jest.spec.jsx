@@ -11,7 +11,7 @@ const pokemonList = [{
   id: 1
 }, {
   url: 'https://pokeapi.co/api/v2/pokemon/133/',
-  name: 'break1',
+  name: 'eevee',
   id: 133
 }]
 
